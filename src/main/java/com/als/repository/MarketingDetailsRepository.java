@@ -1,4 +1,7 @@
 package com.als.repository;
 
-public interface MarketingDetailsRepository {
+import com.als.entity.MarketingDetails;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MarketingDetailsRepository extends JpaRepository<MarketingDetails, Long> {
 }

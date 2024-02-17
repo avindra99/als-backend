@@ -1,7 +1,8 @@
 package com.als.repository;
 
+import com.als.entity.Interview;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface InterviewRepository {
-    //this interface needs to extends JpaRepository<datatype, variable>
+public interface InterviewRepository extends JpaRepository<Interview, Long> {
+
 }
