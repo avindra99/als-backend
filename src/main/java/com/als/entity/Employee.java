@@ -18,9 +18,12 @@ public class Employee {
     private String marketingMobileNumber;
     private String personalMobileNumber;
     private String dateOfBirth;
-    private String role;
     private String accessPortal;
     private String managerId;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private boolean approvedByAdmin;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Interview> interviews;
 
@@ -37,7 +40,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(long employeeId, String firstName, String middleName, String lastName, String emailAddress, String personalEmailAddress, String marketingMobileNumber, String personalMobileNumber, String dateOfBirth, String role, String accessPortal, String managerId, List<Interview> interviews, List<EmployeeExpenses> expenses, List<Attendance> attendances, List<Submission> jobSubmissions) {
+    public Employee(long employeeId, String firstName, String middleName, String lastName, String emailAddress, String personalEmailAddress, String marketingMobileNumber, String personalMobileNumber, String dateOfBirth, String accessPortal, String managerId, Role role, boolean approvedByAdmin, List<Interview> interviews, List<EmployeeExpenses> expenses, List<Attendance> attendances, List<Submission> jobSubmissions) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -47,9 +50,10 @@ public class Employee {
         this.marketingMobileNumber = marketingMobileNumber;
         this.personalMobileNumber = personalMobileNumber;
         this.dateOfBirth = dateOfBirth;
-        this.role = role;
         this.accessPortal = accessPortal;
         this.managerId = managerId;
+        this.role = role;
+        this.approvedByAdmin = approvedByAdmin;
         this.interviews = interviews;
         this.expenses = expenses;
         this.attendances = attendances;
@@ -128,14 +132,6 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getAccessPortal() {
         return accessPortal;
     }
@@ -150,6 +146,22 @@ public class Employee {
 
     public void setManagerId(String managerId) {
         this.managerId = managerId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isApprovedByAdmin() {
+        return approvedByAdmin;
+    }
+
+    public void setApprovedByAdmin(boolean approvedByAdmin) {
+        this.approvedByAdmin = approvedByAdmin;
     }
 
     public List<Interview> getInterviews() {
