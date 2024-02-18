@@ -15,7 +15,6 @@ public class EmployeeExpenses {
     private String addedBy;
     private String category;
 
-    // Constructors
     public EmployeeExpenses() {
     }
 

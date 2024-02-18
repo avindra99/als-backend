@@ -7,7 +7,6 @@ import com.als.exception.InterviewNotFoundException;
 import com.als.repository.EmployeeRepository;
 import com.als.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,7 +35,7 @@ public class InterviewService {
         return interviewRepository.findByDate(date);
     }
 
-    public Interview createInterview(Interview interview, Long employeeId) {
+    public Interview createInterview(Interview interview) {
         // Fetch the employee from the database using the provided employeeId
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + employeeId));
