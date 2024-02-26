@@ -21,7 +21,7 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-    @PostMapping("/createemployee")
+    @PostMapping("/create")
     public ResponseEntity<Employee> createEmployee(@RequestBody @Valid Employee employee){
         Employee createdEmployee = employeeService.createEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);

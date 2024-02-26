@@ -1,7 +1,9 @@
 package com.als.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "Interview")
@@ -18,12 +20,12 @@ public class Interview {
     @ManyToOne
     @JoinColumn(name = "employeeId", referencedColumnName = "employeeId", nullable = false)
     private Employee employee;
+    private LocalDate date;
 
     public Interview() {
     }
 
-    public Interview(long interviewId, String vendorName, String vendorEmail, String vendorPhoneNumber,
-                     LocalDateTime startTime, LocalDateTime endTime, String comments, Employee employee) {
+    public Interview(long interviewId, String vendorName, String vendorEmail, String vendorPhoneNumber, LocalDateTime startTime, LocalDateTime endTime, String comments, Employee employee, LocalDate date) {
         this.interviewId = interviewId;
         this.vendorName = vendorName;
         this.vendorEmail = vendorEmail;
@@ -32,6 +34,7 @@ public class Interview {
         this.endTime = endTime;
         this.comments = comments;
         this.employee = employee;
+        this.date = date;
     }
 
     public long getInterviewId() {
@@ -96,5 +99,13 @@ public class Interview {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

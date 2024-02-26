@@ -17,7 +17,7 @@ import java.util.Optional;
 public class InterviewService {
     private InterviewRepository interviewRepository;
     private EmployeeRepository employeeRepository;
-    @Autowired
+
     public InterviewService(InterviewRepository interviewRepository, EmployeeRepository employeeRepository) {
         this.interviewRepository = interviewRepository;
         this.employeeRepository = employeeRepository;
@@ -34,22 +34,19 @@ public class InterviewService {
     public List<Interview> getInterviewsByDate(LocalDate date) {
         return interviewRepository.findByDate(date);
     }
-
     public Interview createInterview(Interview interview) {
-        // Fetch the employee from the database using the provided employeeId
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + employeeId));
-
-        Interview createInterview = new Interview();
-        interview.setVendorName(interview.getVendorName());
-        interview.setVendorEmail(interview.getVendorEmail());
-        interview.setVendorPhoneNumber(interview.getVendorPhoneNumber());
-        interview.setStartTime(interview.getStartTime());
-        interview.setEndTime(interview.getEndTime());
-        interview.setComments(interview.getComments());
-        interview.setEmployee(employee);
-
-        return interviewRepository.save(createInterview);
+        Employee employee = interview.getEmployee();
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee cannot be null");
+        }
+        Long employeeId = employee.getEmployeeId();
+        if (employeeId == null) {
+            throw new IllegalArgumentException("EmployeeId cannot be null");
+        }
+        Employee existingEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new IllegalArgumentException("Employee with the given ID does not exist"));
+        interview.setEmployee(existingEmployee);
+        return interviewRepository.save(interview);
     }
 
     public Interview updateInterview(long id, Interview updatedInterview) {
@@ -67,7 +64,9 @@ public class InterviewService {
         return interviewRepository.save(existingInterview);
     }
 
-    public void deleteInterview(long id) {
-        interviewRepository.deleteById(id);
+    public void deleteInterviewById(long id) {
+        Interview existingInterview = interviewRepository.findById(id)
+                .orElseThrow(() -> new InterviewNotFoundException("Interview not found with id: " + id));
+        interviewRepository.delete(existingInterview);
     }
 }
